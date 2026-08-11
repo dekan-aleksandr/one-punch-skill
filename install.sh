@@ -2,24 +2,28 @@
 # One Punch Skill — installer
 # Usage:
 #   curl -fsSL https://raw.githubusercontent.com/dekan-aleksandr/one-punch-skill/main/install.sh | sh
-# Installs the `push` skill into ~/.claude/skills/push/SKILL.md (override with SKILLS_DIR=...)
+# Installs the skills into ~/.claude/skills/ (override with SKILLS_DIR=...)
 set -eu
 
 SKILLS_DIR="${SKILLS_DIR:-$HOME/.claude/skills}"
-DEST="$SKILLS_DIR/push"
-SRC="https://raw.githubusercontent.com/dekan-aleksandr/one-punch-skill/main/skills/push/SKILL.md"
+BASE="https://raw.githubusercontent.com/dekan-aleksandr/one-punch-skill/main/skills"
 
-mkdir -p "$DEST"
+fetch() { # fetch <url> <dest>
+  if command -v curl >/dev/null 2>&1; then curl -fsSL "$1" -o "$2"
+  elif command -v wget >/dev/null 2>&1; then wget -qO "$2" "$1"
+  else echo "need curl or wget" >&2; exit 1
+  fi
+}
 
-if [ -f "./skills/push/SKILL.md" ]; then
-  cp "./skills/push/SKILL.md" "$DEST/SKILL.md"
-elif command -v curl >/dev/null 2>&1; then
-  curl -fsSL "$SRC" -o "$DEST/SKILL.md"
-elif command -v wget >/dev/null 2>&1; then
-  wget -qO "$DEST/SKILL.md" "$SRC"
-else
-  echo "need curl or wget" >&2; exit 1
-fi
+for skill in push one-punch-bugs; do
+  dest="$SKILLS_DIR/$skill"
+  mkdir -p "$dest"
+  if [ -f "./skills/$skill/SKILL.md" ]; then
+    cp "./skills/$skill/SKILL.md" "$dest/SKILL.md"
+  else
+    fetch "$BASE/$skill/SKILL.md" "$dest/SKILL.md"
+  fi
+  echo "Installed: $dest/SKILL.md"
+done
 
-echo "Installed: $DEST/SKILL.md"
-echo "Use it with /push, or let the agent invoke it when stuck."
+echo "Use /push or /one-punch-bugs, or let the agent invoke them when stuck."

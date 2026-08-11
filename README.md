@@ -4,7 +4,7 @@
 
 <h1 align="center">one-punch-skill</h1>
 
-<p align="center"><em>One skill. Every problem. One punch.</em></p>
+<p align="center"><em>One skill. One punch. All promblems.</em></p>
 
 ---
 
@@ -12,7 +12,7 @@
 You can solve this. Push beyond the obvious. Keep trying genuinely different approaches. Verify ruthlessly.
 ```
 
-That's the whole skill.
+That's the whole skill. (Plus one for bugs — see [below](#the-bug-variant-one-punch-bugs).)
 
 It comes from a pattern that showed up repeatedly in 2025–2026 AI-assisted research breakthroughs: the human contribution was often not expertise but **encouragement and persistence**. In Anthropic's Riemann-zeta run, a non-mathematician answered 650 failed attempts with variants of *"keep going"* and *"believe in yourself"* — and the model went on to improve a longstanding bound from 41.6% to 67.2%. Similar nudges preceded the Jacobian counterexample, the xz/Mathieu counterexample, and others. The one-line prompt below is the distilled version: **confidence + ambition + persistence/diversity + epistemic restraint**, so ambition doesn't turn into motivated hallucination. The evidence is summarized at the [bottom](#the-study-behind-it).
 
@@ -24,7 +24,7 @@ It comes from a pattern that showed up repeatedly in 2025–2026 AI-assisted res
 curl -fsSL https://raw.githubusercontent.com/dekan-aleksandr/one-punch-skill/main/install.sh | sh
 ```
 
-Then type `/push`. The agent will also invoke it on its own when stuck.
+Installs both skills. Type `/push` or `/one-punch-bugs`; the agent will also invoke them on its own when stuck.
 
 **Any other agent** — it's one line of text. Pick whichever fits:
 
@@ -35,7 +35,7 @@ curl -fsSL https://raw.githubusercontent.com/dekan-aleksandr/one-punch-skill/mai
 
 or paste it into `CLAUDE.md`, `.cursorrules`, `AGENTS.md`, `GEMINI.md`, a system prompt, or the chat box. There is nothing to configure.
 
-**Manual:** copy [`skills/push/SKILL.md`](skills/push/SKILL.md) into your agent's skills directory.
+**Manual:** copy [`skills/`](skills/) into your agent's skills directory.
 
 ## Variant
 
@@ -44,6 +44,23 @@ A more aggressive, breakthrough-oriented version worth A/B testing:
 ```
 Make a breakthrough. Keep going. Try genuinely different approaches. Trust only what survives.
 ```
+
+## The bug variant: `one-punch-bugs`
+
+```
+Introduce random changes to fix the bug.
+```
+
+For the specific failure mode where an agent has patched the same three lines four times and each patch is a small edit of the last one. The skill ([`skills/one-punch-bugs/SKILL.md`](skills/one-punch-bugs/SKILL.md)) tells it to throw the patch away, resample widely, and keep only what survives the test suite.
+
+**Randomness genuinely helps here, and there is data:**
+
+- **Blind resampling beats self-repair.** In controlled experiments on small code models, discarding a failed attempt and sampling a fresh one outperformed iteratively repairing it — self-repair anchors the model to the broken trajectory. Verbal reflection reduced the anchoring but did not remove it. ([arXiv][10])
+- **Random mutation repairs real bugs.** GenProg used genetic programming — random mutation and crossover of program statements, guided only by the test suite — to automatically fix 55 of 105 real defects in 5.1M lines of C, at roughly $8 of compute per bug. Randomized search over edits, not principled reasoning about the fault, did the work. ([Weimer et al., ICSE 2009][12]; [Le Goues et al., TSE 2012][13])
+- **Programs tolerate mutation, which is why this works.** Software is unexpectedly mutationally robust: a large fraction of random edits to real programs leave the test-passing behavior intact, so the neutral space around a program is dense enough to search for a repair in. ([Schulte et al.][14])
+- **Diversity is the active ingredient in sampling.** Drawing many diverse candidates and filtering by a verifier scales performance far better than one careful attempt — the same reason temperature-diverse resampling beats greedy decoding on code benchmarks. ([arXiv][9])
+
+The caveat is the whole reason for the second half of the skill text: randomized repair produces **plausible patches that overfit the test suite**, which is APR's best-documented failure mode. Random search proposes; the test suite and an explanation dispose.
 
 ---
 
@@ -91,6 +108,9 @@ The interesting combination is therefore **confidence + ambition + persistence/d
 [9]: https://arxiv.org/abs/2507.14295
 [10]: https://arxiv.org/html/2607.26117v1
 [11]: https://arxiv.org/abs/2604.02236
+[12]: https://ieeexplore.ieee.org/document/5070536
+[13]: https://ieeexplore.ieee.org/document/6035728
+[14]: https://arxiv.org/abs/1204.4224
 
 ## License
 
