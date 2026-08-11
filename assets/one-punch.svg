@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 260" width="640" height="260" role="img" aria-label="A bald caped hero throwing one punch">
+  <rect width="640" height="260" fill="none"/>
+  <g fill="none" stroke="#e8b100" stroke-width="7" stroke-linecap="round" stroke-linejoin="round">
+    <!-- speed lines -->
+    <path d="M410 130 H620 M430 100 H600 M430 160 H600 M445 72 H570 M445 188 H570"/>
+  </g>
+  <g fill="none" stroke="currentColor" stroke-width="9" stroke-linecap="round" stroke-linejoin="round" color="#d33">
+    <!-- cape -->
+    <path d="M150 100 C 90 130, 70 190, 60 225 C 110 210, 150 200, 178 196"/>
+  </g>
+  <g fill="none" stroke="currentColor" stroke-width="10" stroke-linecap="round" stroke-linejoin="round" color="#222">
+    <!-- bald head -->
+    <circle cx="205" cy="78" r="38"/>
+    <!-- eyes, unimpressed -->
+    <path d="M192 74 h10 M218 74 h10"/>
+    <!-- body -->
+    <path d="M205 116 V190"/>
+    <!-- legs -->
+    <path d="M205 190 L175 245 M205 190 L240 245"/>
+    <!-- back arm -->
+    <path d="M205 135 L160 165"/>
+    <!-- punching arm -->
+    <path d="M205 132 H360"/>
+    <!-- fist -->
+    <path d="M360 112 h34 a20 20 0 0 1 0 40 h-34 z" fill="#222"/>
+  </g>
+  <g fill="none" stroke="#e8b100" stroke-width="8" stroke-linecap="round">
+    <!-- impact burst -->
+    <path d="M404 132 l38 0 M400 108 l32 -22 M400 156 l32 22 M398 92 l16 -32 M398 172 l16 32"/>
+  </g>
+</svg>
